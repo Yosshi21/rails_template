@@ -210,6 +210,41 @@ insert_into_file 'spec/spec_helper.rb',%(
 gsub_file 'spec/spec_helper.rb', "require 'rspec/autorun'", ''
 end
 
+# annotate install
+generate 'annotate:install'
+
+# awesome_print install
+create_file '.pryrc' do
+    body = <<-EOS
+    require "awesome_print"
+    AwesomePrint.pry!
+    EOS
+end
+
+# set up rubocop
+create_file '.rubocop.yml', <<YAML
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/*'
+    - 'config/**/*'
+    - 'Gemfile'
+    - 'Guardfile'
+    - 'db/**/*'
+    - 'spec/spec_helper.rb'
+    - 'spec/turnip_helper.rb'
+  RunRailsCops: true
+  DisplayCopNames: true
+Style/Documentation:
+  Enabled: false
+YAML
+
+append_to_file 'Rakefike' do
+    "require 'rubocop/rake_task'"
+    "RuboCop::RakeTask.new"
+end
+
+
 # git init
 # ----------------------------------------------------------------
 git :init
