@@ -4,9 +4,8 @@
 run 'rm README.rdoc'
 
 # .gitignore
-run 'gibo OSX Ruby Rails JetBrains SASS Sublimetext > .gitignore' rescue nil
-gsub_file '.gitignore', /^config\/initializers\/secret_token.rb$/, ''
-gsub_file '.gitignore', /config\/secret.yml/, ''
+run 'rm -rf .gitignore'
+run 'wget https://raw.githubusercontent.com/Yosshi21/rails_template/master/.gitignore -P .gitignore'
 
 # add to Gemfile
 run 'rm -rf Gemfile'
@@ -87,7 +86,7 @@ run 'bundle install --path vendor/bundle'
 # set Japanese locale
 generate 'i18n_locale ja'
 run 'rm -rf config/locales/ja.yml'
-run 'wget https://raw.github.com/hachi8833/rails4.0_template/master/config/locales/ja.yml -P config/locales/'
+run 'wget https://raw.githubusercontent.com/Yosshi21/rails_template/master/config/locales/ja.yml -P config/locales/'
 
 # set config/application.rb
 application  do
@@ -131,11 +130,11 @@ FILE
 
 # application.js(turbolink setting)
 run 'rm -rf app/assets/javascripts/application.js'
-run 'wget https://raw.github.com/hachi8833/rails4.0_template/master/app/assets/javascripts/application.js -P app/assets/javascripts/'
+run 'wget https://raw.github.com/Yosshi21/rails_template/master/app/assets/javascripts/application.js -P app/assets/javascripts/'
 
 # applocation.css(Bootstrap/Font-Awesome)
 run 'rm -rf app/assets/stylesheets/application.css'
-run 'wget https://raw.github.com/morizyun/rails4_template/master/app/assets/stylesheets/application.css.scss -P app/assets/stylesheets/'
+run 'wget https://raw.github.com/Yosshi21/rails_template/master/app/assets/stylesheets/application.scss -P app/assets/stylesheets/'
 
 # For Bullet (N+1 Problem)
 insert_into_file 'config/environments/development.rb',%(
@@ -158,7 +157,7 @@ Bundler.with_clean_env do
 
 # Database
 run 'rm -rf config/database.yml'
-run 'wget https://raw.github.com/hachi8833/rails4.0_template/master/config/database.yml -P config/'
+run 'wget https://raw.github.com/Yosshi21/rails_template/master/config/database.yml -P config/'
 gsub_file 'config/database.yml', /APPNAME/, @app_name
 run 'cp config/database.yml config/database.yml.sample'
 gsub_file 'config/database.yml', /PASSWD/, @db_password
@@ -170,11 +169,7 @@ end
 
 # Unicorn(App Server)
 run 'mkdir config/unicorn'
-run 'wget https://raw.github.com/morizyun/rails4_template/master/config/unicorn/development.rb -P config/unicorn/'
-run 'wget https://raw.github.com/morizyun/rails4_template/master/config/unicorn/heroku.rb -P config/unicorn/'
-run 'wget https://raw.github.com/morizyun/rails4_template/master/config/unicorn/production.rb -P config/unicorn/'
-run 'wget https://raw.github.com/morizyun/rails4_template/master/config/unicorn/staging.rb -P config/unicorn/'
-run "echo 'web: bundle exec unicorn -p $PORT -c ./config/unicorn/heroku.rb' > Procfile"
+run 'wget https://raw.github.com/Yosshi21/rails_template/master/config/unicorn/production.rb -P config/unicorn/'
 
 # Rspec/Spring/Guard
 # ----------------------------------------------------------------
