@@ -1,0 +1,20 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: root
+  password: PASSWD
+  socket: /var/lib/mysql/mysql.sock
+
+development:
+  <<: *default
+  database: APP_NAME_development
+
+test:
+  <<: *default
+  database: APP_NAME_test
+
+production:
+  <<: *default
+  database: APP_NAME_production
+  username: APP_NAME
